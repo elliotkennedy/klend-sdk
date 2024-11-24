@@ -96,9 +96,23 @@ await sendTransactionFromAction(env, sendTransaction); // sendTransaction from w
 ```
 
 ## CLI
-* npx tsx src/client.ts deposit --url <RPC> --owner ./keypair.json --token USDH --amount 10
+* npx tsx src/client.ts withdaw --url <RPC> --owner ./keypair.json --token USDH --amount 10
 * npx tsx src/client.ts deposit --url <RPC> --owner ./keypair.json --token SOL --amount 10
 
 ## Codegen
 * Copy the new `idl` from the kamino-lending program to `src/idl.json`
 * `yarn codegen`
+
+
+# Recover
+
+#### jito market
+`H6rHXmXoCQvq8Ue81MqNh7ow5ysPa1dSozwW3PU1dDH6`
+
+```shell
+npx tsx src/client.ts withdraw-to-wallet --url $RPC --owner ./brick-test.json --new-wallet <new-wallet> --token JITOSOL --market H6rHXmXoCQvq8Ue81MqNh7ow5ysPa1dSozwW3PU1dDH6
+```
+
+
+#### main market
+`7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF`

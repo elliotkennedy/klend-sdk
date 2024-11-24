@@ -859,7 +859,8 @@ export class KaminoAction {
     includeUserMetadata: boolean = true, // if true it includes user metadata
     referrer: PublicKey = PublicKey.default,
     currentSlot: number = 0,
-    scopeRefresh: ScopeRefresh = { includeScopeRefresh: false, scopeFeed: 'hubble' }
+    scopeRefresh: ScopeRefresh = { includeScopeRefresh: false, scopeFeed: 'hubble' },
+    destination?: PublicKey,
   ) {
     const axn = await KaminoAction.initialize(
       'withdraw',
@@ -895,7 +896,7 @@ export class KaminoAction {
       includeUserMetadata,
       addInitObligationForFarm
     );
-    await axn.addWithdrawIx();
+    await axn.addWithdrawIx(destination);
     axn.addRefreshFarmsCleanupTxnIxsToCleanupIxs();
 
     return axn;
@@ -1447,7 +1448,7 @@ export class KaminoAction {
     );
   }
 
-  async addWithdrawIx() {
+  async addWithdrawIx(destination?: PublicKey) {
     const collateralExchangeRate = this.reserve.getEstimatedCollateralExchangeRate(
       this.currentSlot,
       this.kaminoMarket.state.referralFeeBps
@@ -1473,7 +1474,7 @@ export class KaminoAction {
           reserveCollateralMint: this.reserve.getCTokenMint(),
           reserveLiquiditySupply: this.reserve.state.liquidity.supplyVault,
           reserveSourceCollateral: this.reserve.state.collateral.supplyVault,
-          userDestinationLiquidity: this.userTokenAccountAddress,
+          userDestinationLiquidity: destination || this.userTokenAccountAddress,
           placeholderUserDestinationCollateral: this.kaminoMarket.programId,
           collateralTokenProgram: TOKEN_PROGRAM_ID,
           liquidityTokenProgram: this.reserve.getLiquidityTokenProgram(),
