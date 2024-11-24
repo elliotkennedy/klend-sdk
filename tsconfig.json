@@ -27,5 +27,5 @@
   },
   "compileOnSave": true,
   "include": ["src/**/*"],
-  "exclude": ["tests", "src/client.ts", "dist", "node_modules", "examples"]
+  "exclude": ["tests", "dist", "node_modules", "examples"]
 }
